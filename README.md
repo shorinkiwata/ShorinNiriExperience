@@ -20,7 +20,7 @@ Niri官方repo的demo视频用几分钟简单地演示了Niri的特性，绝对�
 初学者可以[按照这个教程](https://github.com/shorinkiwata/ArchlinuxInstallationGuide-ShorinArchExperience)安装KDE Plasma或者GNOME，在此基础上安装Niri
 
 ```
-sudo pacman -S niri xwayland-satellite fuzzel alacritty swaylock brightnessctl
+sudo pacman -S niri xwayland-satellite fuzzel alacritty swaylock brightnessctl 
 ```
 
 ``niri``是本体，``xwayland-satellite``开启niri的xwayland。``fuzzel``是niri默认的应用启动器，``alacritty``是niri默认的终端仿真器，`swaylock`是默认的锁屏软件。这些先装着，想换随时能换。`brightnessctl`调节屏幕亮度。
@@ -109,7 +109,24 @@ systemctl --user daemon-reload
 systemctl --user add-wants niri.service swayidle.service
 ```
 
+要重启会话才能生效。
+
 如果不需要这些服务和niri同时启动就删除`~/.config/systemd/user/niri.service.wants/`里的链接，然后`systemctl --user daemon-reload`
+
+## polkit
+
+```
+sudo pacman -S polkit-gnome
+```
+
+配置文件里添加
+
+```
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+```
+
+重启会话
+
 
 # 配置
 
@@ -405,10 +422,64 @@ Mod+Shift+Ctrl+E { quit; }
 
 `layout{focus-ring{}}`
 
+## 快照
 
+```
+sudo pacman -S snapper snap-pac btrfs-assistant grub-btrfs inotify-tools
+```
+
+```
+sudo systemctl enable --now grub-btrfsd
+```
+
+- 设置覆盖文件系统（overlayfs）
+
+  编辑``/etc/mkinitcpio.conf``
+
+  ```
+  sudo vim /etc/mkinitcpio.conf
+  ```
+
+  在HOOKS里添加```grub-btrfs-overlayfs```
+
+  ```
+  HOOKS= ( ...... grub-btrfs-overlayfs )
+  ```
+
+  重新生成initramfs
+
+  ```
+  sudo mkinitcpio -P
+  ```
+
+  重启电脑
+
+  ```
+  reboot
+  ```
+
+
+## flatpak
+
+```
+sudo pacman -S gnome-software flatpak
+```
+
+```
+reboot 
+```
+
+```
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+```
 
 ## issuse
 
 透明窗口会有背景
 
 壁纸
+
+gtk软件冷启动特别慢
+
+nautilus没法右键从终端打开
+
