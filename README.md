@@ -297,7 +297,7 @@ Mod+X { spwan-sh "wofi --show drun"}
 - Mod+T打开终端
 
   ```rust
-  Mod+T hotkey-overlay-title="Open a Terminal: konsole" { spawn "konsole"; }
+  Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
   ```
 
 - Mod+E打开文档管理器
@@ -480,6 +480,4 @@ flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/fl
 壁纸
 
 gtk软件冷启动特别慢
-
-nautilus没法右键从终端打开
 
