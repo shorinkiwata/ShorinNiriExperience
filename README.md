@@ -226,7 +226,7 @@ Mod+T设置super+T键打开终端；``hotkey-overlay-title="Open a Terminal: ala
    }
    ```
 
-## 窗口圆角
+## 窗口圆角和透明度
 
 找到这一段window-rule取消注释（就是那个``/-``符号）或者自己写入。
 
@@ -234,10 +234,11 @@ Mod+T设置super+T键打开终端；``hotkey-overlay-title="Open a Terminal: ala
 window-rule {
     geometry-corner-radius 14
     clip-to-geometry true
+    opacity 0.95
 }
 ```
 
-``geometry-corner-radius 14``设置圆角的像素半径；``clip-to-geometry true``设置裁剪超出圆角的部分。
+``geometry-corner-radius 14``设置圆角的像素半径；``clip-to-geometry true``设置裁剪超出圆角的部分。opacity 0.95设置全局窗口透明度。
 
 ## 鼠标速度
 
@@ -473,11 +474,28 @@ reboot
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
 
+## 蓝牙
+
+```
+sudo pacman -S bluez bluez-utils blueman
+```
+
+```
+sudo systemctl enable --now bluetooth.service
+```
+打开图形界面
+```
+blueman-manager
+```
+niri设置面板组件开机自启
+```
+spawn-at-startup "blueman-applet"
+```
+
+
 ## issuse
 
 透明窗口会有背景
-
-壁纸
 
 gtk软件冷启动特别慢
 
